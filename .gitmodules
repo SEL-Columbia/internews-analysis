@@ -1,0 +1,3 @@
+[submodule "bamboo.js"]
+	path = bamboo.js
+	url = git://github.com/modilabs/bamboo.js.git
