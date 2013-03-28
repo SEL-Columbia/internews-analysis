@@ -4,7 +4,10 @@
   exclude_list = ["name"];
   dataset_id = '3a18780972da435e8c7e345b34bfcd65';// students
   dataset_id = 'eaa43ef6baa54af4948303fd093d9756'; //expenses
-  //dataset_id = '890c9e48f0154197be128bf07ce08dee';
+  dataset_id = '890c9e48f0154197be128bf07ce08dee'; // dadaab
+  dataset_id = '7d30227a371e407f949559c46720ae82'; // tutorial_sdf
+  // set URL to localhost
+  bamboo.settings.URL = "http://localhost:8080/";
   dataset = new bamboo.Dataset({id: dataset_id});
 
   info_ready = function(info){
@@ -24,7 +27,7 @@
     var temp_colors = ['#F38630', '#E0E4CC', '#69D2E7', '#4D5360', '#949FB1', '#D4CCC5', '#E2EAE9', '#F7464A'];
     var index = 0;
     _.each(dimensions, function(field, field_name){
-      if(typeof(exclude_list) == "undefined" || (typeof(exclude_list) != "undefined" && !_.contains(exclude_list, field_name)))
+      if(summaries.hasOwnProperty(field_name) && (typeof(exclude_list) == "undefined" || (typeof(exclude_list) != "undefined" && !_.contains(exclude_list, field_name))))
       {
         // create a canvas object
         var chart_container, title_elm, chart_elm, chart_elm_id, context, chart, data, raphael, chart;
@@ -39,8 +42,9 @@
         // generate data
         data = [];
         var temp_color_index = 0;
+        // make sure we have a summary object for field_name
         _.each(summaries[field_name].summary, function(value, label){
-          data.push({value: value, label: label});
+          data.push({value: value, label: label + ' [' + value + ']'});
         });
         raphael_data = _.map(data, function(item){
           return item.value;
